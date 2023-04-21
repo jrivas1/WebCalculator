@@ -50,7 +50,7 @@ function processClick(e) {
             calculator.currentNum = calculator.currentNum.substring(1);
         }
     }
-    if (["+","-","x","&#247;","="].includes(text)) {
+    if (["+","-","x","÷","="].includes(text)) {
         calculator.currentResult = calculator.currentResult ? calculator.operator() : calculator.currentNum;
         calculator.numNext = true;
 
@@ -63,7 +63,7 @@ function processClick(e) {
         if (text === "x") {
             calculator.operator = calculator.multiply;
         }
-        if (text === "&#247;") {
+        if (text === "÷") {
             calculator.operator = calculator.divide;
         }
 
