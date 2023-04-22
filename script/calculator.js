@@ -53,7 +53,7 @@ function processClick(e) {
         }
     }
     if (["+", "-", "x", "÷", "="].includes(text)) {
-        if(!calculator.numNext || text === "="){
+        if(!calculator.numNext){
             calculator.currentResult = calculator.currentResult ? calculator.operator() : calculator.currentNum;
         }
         calculator.numNext = true;
