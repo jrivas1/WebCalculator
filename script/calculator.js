@@ -4,6 +4,7 @@ const calculator = {
     currentResult: "",
     operator: null,
     numNext: false,
+    done: false,
     add: function () { return (+this.currentResult + +this.currentNum).toString() },
     subtract: function () { return (+this.currentResult - +this.currentNum).toString() },
     multiply: function () { return (+this.currentResult * +this.currentNum).toString() },
@@ -30,12 +31,18 @@ function processClick(e) {
     let text = e.currentTarget.innerText;
 
     if (!isNaN(text)) {
-
         if (calculator.numNext) {
             calculator.numNext = false;
             calculator.currentNum = "";
         }
-        calculator.currentNum += text;
+        if (calculator.done) {
+            calculator.currentResult = "";
+            calculator.operator = null;
+            calculator.done = false;
+        }
+        if (calculator.currentNum.length < 8) {
+            calculator.currentNum += text;
+        }
     }
     if (text === "AC") {
         calculator.currentNum = "";
@@ -50,8 +57,10 @@ function processClick(e) {
             calculator.currentNum = calculator.currentNum.substring(1);
         }
     }
-    if (["+","-","x","÷","="].includes(text)) {
-        calculator.currentResult = calculator.currentResult ? calculator.operator() : calculator.currentNum;
+    if (["+", "-", "x", "÷", "="].includes(text)) {
+        if(!calculator.numNext || text === "="){
+            calculator.currentResult = calculator.currentResult ? calculator.operator() : calculator.currentNum;
+        }
         calculator.numNext = true;
 
         if (text === "+") {
@@ -66,16 +75,12 @@ function processClick(e) {
         if (text === "÷") {
             calculator.operator = calculator.divide;
         }
-
-        if (text === "=") {
-            calculator.operator = calculator.equals;
-        }
     }
-    if (text === "%"){
+    if (text === "%") {
         calculator.currentNum /= 100;
     }
     if (text === ".") {
-        if (!calculator.currentNum.includes(".")){
+        if (!calculator.currentNum.includes(".")) {
             calculator.currentNum = calculator.currentNum.concat(".");
         }
     }
@@ -84,6 +89,9 @@ function processClick(e) {
 }
 
 function updateDisplay() {
-    let text = calculator.numNext ? +calculator.currentResult : +calculator.currentNum;
-    display.innerText = text;
+    let num = calculator.numNext ? +calculator.currentResult : +calculator.currentNum;
+    if (num.toString().length > 8) {
+        num = num.toExponential(3);
+    }
+    display.innerText = num;
 }

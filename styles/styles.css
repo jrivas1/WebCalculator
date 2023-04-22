@@ -44,10 +44,19 @@ button {
     font-size: 40px;
     border-radius: 50px;
     border-width: 0px;
+    transition: background-color 500ms ease 0s;
 }
 
 button.operator {
     background-color: darkorange;
+}
+
+button:focus {
+    background-color: silver;
+}
+
+button.operator:focus {
+    background-color: rgb(239, 173, 93);
 }
 
 .bottom1 {
