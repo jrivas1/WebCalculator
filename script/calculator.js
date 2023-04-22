@@ -70,6 +70,9 @@ function processClick(e) {
         if (text === "÷") {
             calculator.operator = calculator.divide;
         }
+        if (text === "=") {
+            calculator.operator = calculator.equals;
+        }
     }
     if (text === "%") {
         calculator.currentNum /= 100;
