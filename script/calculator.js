@@ -2,7 +2,7 @@
 const calculator = {
     currentNum: "",
     currentResult: "",
-    operator: null,
+    operator: this.equals,
     numNext: false,
     done: false,
     add: function () { return (+this.currentResult + +this.currentNum).toString() },
@@ -12,7 +12,7 @@ const calculator = {
         return (this.currentResult / this.currentNum).toString();
     },
     equals: function () {
-        return this.currentResult;
+        return +this.currentNum;
     }
 };
 const display = document.querySelector(".display");
@@ -35,18 +35,13 @@ function processClick(e) {
             calculator.numNext = false;
             calculator.currentNum = "";
         }
-        if (calculator.done) {
-            calculator.currentResult = "";
-            calculator.operator = null;
-            calculator.done = false;
-        }
         if (calculator.currentNum.length < 8) {
             calculator.currentNum += text;
         }
     }
     if (text === "AC") {
         calculator.currentNum = "";
-        calculator.operator = null;
+        calculator.operator = calculator.equals;
         calculator.currentResult = "";
         calculator.numNext = false;
     }
